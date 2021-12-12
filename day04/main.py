@@ -30,8 +30,7 @@ def find_bingo(num_set):
                         break
                 if bingo: return board, num
 
-board, num = find_bingo(called_nums)
-print(called_nums)
+board, last_called = find_bingo(called_nums)
 sum_unmarked = 0
 
 for row in board:
@@ -39,4 +38,49 @@ for row in board:
         if val not in called_nums:
             sum_unmarked += val
 
-print(sum_unmarked * num)
+print(sum_unmarked * last_called)
+
+# Part 2
+called_nums = set()
+
+def find_last_bingo(num_set):
+    for num in draw_nums:
+        num_set.add(num)
+        board_cpy = boards[:]
+        for board in board_cpy:
+            for row in board:
+                bingo = True
+                for val in row:
+                    if val not in num_set:
+                        bingo = False
+                        break
+                if bingo:
+                    if (len(board_cpy) != 1):
+                        boards.remove(board)
+                    else:
+                        return board, num
+            
+            for i in range(len(board[0])): # Check ith col
+                bingo = True
+                for j in range(len(board)): # Check ith col in jth row
+                    if board[j][i] not in num_set:
+                        bingo = False
+                        break
+                if bingo:
+                    if (len(board_cpy) != 1):
+                        try:
+                            boards.remove(board)
+                        except ValueError:
+                            pass
+                    else:
+                        return board, num
+
+board, last_called = find_last_bingo(called_nums)
+sum_unmarked = 0
+
+for row in board:
+    for val in row:
+        if val not in called_nums:
+            sum_unmarked += val
+
+print(sum_unmarked * last_called)
