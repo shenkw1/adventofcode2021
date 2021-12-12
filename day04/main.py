@@ -84,3 +84,48 @@ for row in board:
             sum_unmarked += val
 
 print(sum_unmarked * last_called)
+
+# Optimized part 2 with set
+called_nums = set()
+indices = set(range(len(boards)))
+
+def find_last_bingo_set(num_set):
+    for num in draw_nums:
+        num_set.add(num)
+        for index, board in enumerate(boards):
+            for row in board:
+                bingo = True
+                for val in row:
+                    if val not in num_set:
+                        bingo = False
+                        break
+                if bingo:
+                    if (len(indices) != 1):
+                        indices.remove(index)
+                    else:
+                        return boards[index], num
+            
+            for i in range(len(board[0])): # Check ith col
+                bingo = True
+                for j in range(len(board)): # Check ith col in jth row
+                    if board[j][i] not in num_set:
+                        bingo = False
+                        break
+                if bingo:
+                    if (len(indices) != 1):
+                        try:
+                            indices.remove(index)
+                        except ValueError:
+                            pass
+                    else:
+                        return boards[index], num
+
+board, last_called = find_last_bingo_set(called_nums)
+sum_unmarked = 0
+
+for row in board:
+    for val in row:
+        if val not in called_nums:
+            sum_unmarked += val
+
+print(sum_unmarked * last_called)
