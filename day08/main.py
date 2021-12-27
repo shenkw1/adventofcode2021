@@ -54,19 +54,3 @@ for entry in entries:
     total_output += combined_digits
 
 print(int(total_output))
-
-# number is key, string is value
-# use left part of pipe
-# initialize dict with 1, 4, 7, 8
-# take remaining and use 1, 4, 7, 8 to make conclusions
-# length 5 or 6
-# if len 6, has to be 9, 6, 0
-# check if 7 is a subset of current token
-# if it is, has to be 9 or 0, otherwise 6
-# check if 4 is subset of current token
-# if it is, has to be 9, otherwise 0
-# if len 5, has to be 2, 3, 5
-# check if 1 is subset of current token
-# if it is, has to be 3, otherwise 2 or 5
-# check if (8 setminus 4) is a subset of current token
-# if it is, has to be 2, otherwise 5
